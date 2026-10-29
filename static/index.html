@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Семейный банкинг — MVP</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; padding: 12px; background: #f4f6fa; color: #1a1a1a; font-size: 14px; }
+  h1 { font-size: 18px; margin: 0 0 8px; }
+  h2 { font-size: 15px; margin: 0 0 8px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 12px; }
+  .card { background: #fff; border: 1px solid #dde2ea; border-radius: 6px; padding: 12px; overflow-x: auto; }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: 4px 0; }
+  input, select, button, textarea { font: inherit; padding: 4px 6px; }
+  input[type=number] { width: 100px; }
+  button { cursor: pointer; background: #0a2896; color: #fff; border: 0; border-radius: 4px; }
+  button.sec { background: #e6e9f0; color: #111; }
+  button.danger { background: #b3261e; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; }
+  td, th { border-bottom: 1px solid #eee; padding: 3px 4px; text-align: left; vertical-align: top; }
+  .muted { color: #777; font-size: 12px; }
+  .tag { display: inline-block; padding: 1px 6px; border-radius: 10px; background: #eef; font-size: 12px; }
+  .s-completed, .s-approved, .s-accepted, .s-paid, .s-active { background: #d8f5dd; }
+  .s-failed, .s-declined, .s-expired, .s-cancelled, .s-needs_revision, .s-blocked { background: #fbdcdc; }
+  .s-pending, .s-pending_approval, .s-sent, .s-open, .s-draft { background: #fff1c7; }
+  #toast { position: fixed; right: 12px; bottom: 12px; max-width: 420px; background: #222; color: #fff; padding: 8px 12px;
+           border-radius: 6px; display: none; white-space: pre-wrap; font-size: 13px; z-index: 9; }
+  .hidden { display: none; }
+  pre { white-space: pre-wrap; font-size: 12px; margin: 0; }
+</style>
+</head>
+<body>
+<div class="row" style="justify-content:space-between">
+  <h1>ВТБ · Семейный банкинг <span class="muted">MVP (тестовые деньги)</span></h1>
+  <div class="row"><span id="whoami" class="muted"></span><button class="sec hidden" id="logoutBtn">Выйти</button></div>
+</div>
+<div id="app"></div>
+<div id="toast"></div>
+<script src="/static/app.js"></script>
+</body>
+</html>
