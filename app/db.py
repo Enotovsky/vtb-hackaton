@@ -1,9 +1,12 @@
 import os
+from pathlib import Path
 
 from sqlalchemy import create_engine, event
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "sqlite:///./family_bank.db")
+DATA_DIR = Path(__file__).resolve().parent.parent / "data"
+DATA_DIR.mkdir(parents=True, exist_ok=True)
+DATABASE_URL = os.environ.get("DATABASE_URL", f"sqlite:///{DATA_DIR / 'family_bank.db'}")
 
 engine = create_engine(
     DATABASE_URL,
@@ -38,5 +41,6 @@ def get_db():
 
 def init_db():
     from app import models  # noqa: F401
+    from app import ui_models  # noqa: F401
 
     Base.metadata.create_all(engine)

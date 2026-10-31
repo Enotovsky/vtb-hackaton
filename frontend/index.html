@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0667f9">
+  <meta name="description" content="ВТБ Семья — интерактивный концепт семейного банкинга. Общий бюджет, детские карты и большие планы.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%230667f9'/%3E%3Cpath d='M14 17h39l-4 8H10zm0 13h31l-4 8H10zm0 13h22l-4 8H10z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="refinements.css">
+  <link rel="stylesheet" href="mvp/mvp.css">
+  <link rel="stylesheet" href="mvp/family-design.css">
+  <title>ВТБ Семья · Ближе друг к другу</title>
+</head>
+<body>
+  <div class="prototype-bar"><span><i></i> MVP · УЧЕБНЫЕ ПЛАТЕЖИ</span><button id="view-toggle" type="button">Широкий вид</button><a href="presentation.html" target="_blank" rel="noopener">О проекте ↗</a></div>
+  <div class="app-shell">
+    <header class="app-header">
+      <a class="brand" href="#home" aria-label="ВТБ Семья, главная"><svg viewBox="0 0 43 34" aria-hidden="true"><path d="M8 2h35l-4 8H4zm-4 12h31l-4 8H0zm0 12h22l-4 8H0z" fill="currentColor"/></svg><strong>ВТБ</strong><span></span><b>семья</b></a>
+      <div class="header-actions" id="profile-actions"></div>
+    </header>
+    <section class="global-search" aria-label="Поиск по семейному банку" hidden>
+      <form id="family-search-form" role="search" autocomplete="off">
+        <label class="sr-only" for="family-search-input">Поиск по доступным семейным данным</label>
+        <svg class="search-glass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5" stroke-linecap="round"/></svg>
+        <input id="family-search-input" type="search" placeholder="Поиск по семье, тратам и делам" aria-controls="family-search-results" maxlength="120" spellcheck="false">
+        <button id="family-search-clear" type="button" aria-label="Очистить поиск" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke-linecap="round"/></svg></button>
+      </form>
+      <div id="family-search-panel" class="search-panel" hidden>
+        <div class="search-panel-head"><span id="family-search-status" role="status" aria-live="polite"></span><button id="family-search-close" type="button">Закрыть</button></div>
+        <div id="family-search-results" aria-label="Результаты поиска"></div>
+        <p id="family-search-empty" class="search-empty" hidden></p>
+      </div>
+    </section>
+    <div id="connection-status" role="status" hidden></div>
+    <main id="main" tabindex="-1"><div class="loading-state"><span class="spinner"></span><p>Загружаем семейное пространство…</p></div></main>
+    <nav class="bottom-nav" aria-label="Основные разделы"></nav>
+    <footer class="demo-footer">Учебный MVP · Виртуальные деньги · Не сервис банка</footer>
+  </div>
+  <dialog id="sheet" aria-labelledby="sheet-title"><div class="sheet-handle"></div><button type="button" class="icon-btn close-sheet" aria-label="Закрыть" data-action="close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button><div id="sheet-content"></div></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="mvp/app.js"></script>
+</body>
+</html>

@@ -144,13 +144,15 @@ def parent_test_purchase(
 
 
 def purchase_from_wallet(db: Session, child: Child, amount: int, merchant: str, idempotency_key: str | None,
-                         by_user_id: int | None = None) -> dict:
+                         by_user_id: int | None = None, simulate_failure: bool = False) -> dict:
     """Списание с виртуального кошелька. Сервер проверяет заморозку, месячный лимит и баланс кошелька."""
     if not idempotency_key:
         raise ApiError(400, "idempotency_key_required", "Нужен заголовок Idempotency-Key")
     q = select(ChildPurchase).where(ChildPurchase.child_id == child.id,
                                     ChildPurchase.idempotency_key == idempotency_key)
     if existing := db.scalar(q):
+        if existing.amount != amount or existing.merchant != merchant:
+            raise ApiError(409, "idempotency_conflict", "Этот ключ уже использован для другой покупки")
         return {**child_purchase_out(existing), "replayed": True}
 
     purchase = ChildPurchase(child_id=child.id, idempotency_key=idempotency_key, amount=amount,
@@ -170,6 +172,8 @@ def purchase_from_wallet(db: Session, child: Child, amount: int, merchant: str, 
         db.execute(update(Child).where(Child.id == child.id).values(balance=Child.balance))
         c = db.scalar(select(Child).where(Child.id == child.id).with_for_update().execution_options(
             populate_existing=True))
+        if simulate_failure:
+            raise _Fail("provider_error")
         if c.frozen:
             raise _Fail("wallet_frozen")
         if spent_this_month(db, c.id) + amount > c.monthly_limit:

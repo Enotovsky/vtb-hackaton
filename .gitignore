@@ -7,3 +7,7 @@ uploads/
 .pytest_cache/
 .idea/
 .claude/
+
+.build/
+*.pyc
+.env

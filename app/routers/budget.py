@@ -300,6 +300,8 @@ def open_external(rid: int, ctx: MemberCtx = Depends(require_member), db: Sessio
 def mark_done(rid: int, ctx: MemberCtx = Depends(require_member), db: Session = Depends(get_db)):
     """Ручная отметка «оплачено вне приложения». Деньги не двигаются."""
     r = _get_reminder(db, ctx, rid)
+    if db.scalar(select(Payment.id).where(Payment.reminder_id == rid, Payment.status == "pending")):
+        raise ApiError(409, "payment_pending", "Дождитесь результата уже отправленной оплаты")
     res = db.execute(update(Reminder).where(Reminder.id == rid, Reminder.status == "open")
                      .values(status="marked_done", closed_at=utcnow(), closed_by=ctx.user.id))
     if res.rowcount == 0:
